@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-// use Illuminate\Support\Facades\Auth;
 use Auth;
 
 class SessionsController extends Controller
@@ -21,7 +20,7 @@ class SessionsController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->has('remember'))) {
             session()->flash('success', '欢迎回来！');
             return redirect()->route('users.show', [Auth::user()]);
         } else {
@@ -30,7 +29,6 @@ class SessionsController extends Controller
         }
 
     }
-
 
     public function destroy()
     {
